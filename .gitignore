@@ -32,3 +32,6 @@
 *.app
 #
 Debug/
+*.vs
+Debug
+.vs/
