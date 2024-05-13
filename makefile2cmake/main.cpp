@@ -14,7 +14,7 @@ int WordAnalysis(string word);
 int main(int argc, char* argv[])
 {
     ifstream makefile;
-    vector<string> makefileWords = MakefileReader("makefile");
+    vector<string> makefileWords = MakefileReader("Makefile");
     vector<Target> targets;
     Target target;
     Info info;
