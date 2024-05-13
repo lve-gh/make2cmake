@@ -35,13 +35,22 @@ cmake ..
     	rm -rf *.o hello
 
 Результатом работы конвертера является следующий файл CMakeLists.txt: 
+
     cmake_minimum_required(VERSION 3.12)
+    
     project(projectName)
     set(CC g++)
+    
     set(CFLAGS -c -Wall)
+    
     target_link_libraries(all  hello)
+    
     target_link_libraries(hello  main.o factorial.o hello.o)
+    
     add_executable(main.o  main.cpp)
+    
     add_executable(factorial.o  factorial.cpp)
+    
     add_executable(hello.o  hello.cpp)
+    
     target_link_libraries(clean )
