@@ -7,7 +7,7 @@
 using namespace std;
 using namespace std::filesystem;
 
-enum CONTENT { NOTHING = 0, COMMAND, TARGET, CPP, HEADER, EQUALS_SIGN};
+enum CONTENT { NOTHING = 0, COMMAND, TARGET, EQUALS_SIGN};
 
 int WordAnalysis(string word);
 
@@ -40,17 +40,6 @@ int main(int argc, char* argv[])
                     }
                     break;
                 }
-                case CPP: {
-                    if (!target.isExistInCPP(makefileWords[i])) 
-                        target.AddToCPP(makefileWords[i]);
-                    cout << endl;
-                    break;
-                }
-                case HEADER: {
-                    if (!target.isExistInHeader(makefileWords[i]))
-                        target.AddToHeader(makefileWords[i]);
-                    break;
-                }
                 case EQUALS_SIGN: {
                     int pos = makefileWords[i].find("=");
                     if (pos != string::npos)
@@ -66,19 +55,16 @@ int main(int argc, char* argv[])
     }
     targets.emplace_back(target);
     CMakeListsCreater(info);
+    return 0;
 }
 
  int WordAnalysis(string word) {
      if (IsCommand(word))
          return COMMAND;
-     if (IsTarget(word))
+     else if (IsTarget(word))
          return TARGET;
-     else if (IsHeader(word))
-         return HEADER;
      else if (IsEqualsSign(word))
          return EQUALS_SIGN;
-     else if (IsCPP(word))
-         return CPP;
      else
          return NOTHING;
 }

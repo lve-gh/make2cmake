@@ -13,18 +13,10 @@ private:
     string name = "";
     string links = "";
 public:
-    void ClearTarget();
-    void AddToCPP(string cpp);
-    void AddToHeader(string header);
     void SetName(string name);
     void SetLinks(string targets);
     vector<string> GetCPPS();
     vector<string> GetHeaders();
     string GetName();
     string GetLinks();
-    bool isEmpty();
-    bool isCPPSEmty();
-    bool isHeadersEmpty();
-    bool isExistInCPP(string str);
-    bool isExistInHeader(string str);
 };
