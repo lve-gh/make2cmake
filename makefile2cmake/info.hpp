@@ -10,6 +10,7 @@ public:
 	vector<Target> targets;
 	vector<string> varName;
 	vector<string> varValue;
+	vector<string> commandName;
+	vector<string> commandValue;
 //public:
-
 };

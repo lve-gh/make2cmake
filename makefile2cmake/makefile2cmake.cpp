@@ -7,7 +7,7 @@
 using namespace std;
 using namespace std::filesystem;
 
-enum CONTENT { NOTHING = 0, TARGET, CPP, HEADER, EQUALS_SIGN};
+enum CONTENT { NOTHING = 0, COMMAND, TARGET, CPP, HEADER, EQUALS_SIGN};
 
 int WordAnalysis(string word);
 
@@ -17,11 +17,18 @@ int main(int argc, char* argv[])
     vector<string> makefileWords = MakefileReader("makefile");
     vector<Target> targets;
     Target target;
-    vector<string> varName;
-    vector<string> varValue;
     Info info;
     for (int i = 0; i < makefileWords.size(); i++) {
             switch (WordAnalysis(makefileWords[i])) {
+                case COMMAND: {
+                    int pos = makefileWords[i].find("=");
+                    if (pos != string::npos)
+                    {
+                        info.commandName.emplace_back(makefileWords[i].substr(0, pos));
+                        info.commandValue.emplace_back(makefileWords[i].substr(pos + 1));
+                    }
+                    break;
+                }
                 case TARGET: {
                     int pos = makefileWords[i].find(":");
                     if (pos != string::npos)
@@ -62,6 +69,8 @@ int main(int argc, char* argv[])
 }
 
  int WordAnalysis(string word) {
+     if (IsCommand(word))
+         return COMMAND;
      if (IsTarget(word))
          return TARGET;
      else if (IsHeader(word))

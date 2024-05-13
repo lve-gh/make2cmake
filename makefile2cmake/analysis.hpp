@@ -14,6 +14,8 @@ bool IsHeader(string word);
 
 bool IsEqualsSign(string word);
 
+bool IsCommand(string word);
+
 bool IsTarget(string word);
 
 bool ReadAllFiles(vector<string>& files);

@@ -28,6 +28,14 @@ bool IsEqualsSign(string word) {
     return false;
 }
 
+bool IsCommand(string word) {
+    std::istringstream iss(word);
+    std::string token;
+    if (word.find("./") != std::string::npos)
+        return true;
+    return false;
+}
+
 bool IsTarget(string word) {
     std::istringstream iss(word);
     std::string token;

@@ -22,8 +22,20 @@ void CMakeListsCreater(Info info) {
     for (int i = 0; i < info.varName.size(); i++)
         cmakelists << "set(" << info.varName[i] << " " << info.varValue[i] << ")" << endl;
 
-    for (int i = 0; i < info.targets.size(); i++)
-        cmakelists << "add_executable(" << info.targets[i].GetName() << " " << info.targets[i].GetLinks() << ")" << endl;
+    for (int i = 0; i < info.targets.size(); i++) {
+        if(info.targets[i].GetLinks().find(".cpp") != std::string::npos || 
+           info.targets[i].GetLinks().find(".c") != std::string::npos || 
+           info.targets[i].GetLinks().find(".h") != std::string::npos || 
+           info.targets[i].GetLinks().find(".hpp") != std::string::npos)
+            cmakelists << "add_executable(" << info.targets[i].GetName() << " " << info.targets[i].GetLinks() << ")" << endl;
+        else
+            cmakelists << "target_link_libraries(" << info.targets[i].GetName() << " " << info.targets[i].GetLinks() << ")" << endl;
+    }
+
+    for (int i = 0; i < info.commandName.size(); i++) {
+        cmakelists << "set(" << info.commandName[i] << ")" << endl;
+        cmakelists << "execute_progress(COMMAND " << info.commandValue[i] << " WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} RESULT_VARIABLE $(" << info.commandName[i] << "))" << endl;
+    }
 
     cmakelists.close();
 }
