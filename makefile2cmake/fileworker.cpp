@@ -27,7 +27,7 @@ void CMakeListsCreater(Info info) {
            info.targets[i].GetLinks().find(".c") != std::string::npos || 
            info.targets[i].GetLinks().find(".h") != std::string::npos || 
            info.targets[i].GetLinks().find(".hpp") != std::string::npos)
-            cmakelists << "add_executable(" << info.targets[i].GetName() << " " << info.targets[i].GetLinks() << ")" << endl;
+            cmakelists << "add_library(" << info.targets[i].GetName() << " " << info.targets[i].GetLinks() << ")" << endl;
         else
             cmakelists << "target_link_libraries(" << info.targets[i].GetName() << " " << info.targets[i].GetLinks() << ")" << endl;
     }
