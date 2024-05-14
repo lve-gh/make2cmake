@@ -51,10 +51,10 @@ cmake ..
     
     target_link_libraries(hello  main.o factorial.o hello.o)
     
-    add_executable(main.o  main.cpp)
+    add_library(main.o  main.cpp)
     
-    add_executable(factorial.o  factorial.cpp)
+    add_library(factorial.o  factorial.cpp)
     
-    add_executable(hello.o  hello.cpp)
+    add_library(hello.o  hello.cpp)
     
     target_link_libraries(clean )
