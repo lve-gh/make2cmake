@@ -29,12 +29,13 @@ void CMakeListsCreater(Info info) {
            info.targets[i].GetLinks().find(".hpp") != std::string::npos)
             cmakelists << "add_library(" << info.targets[i].GetName() << " " << info.targets[i].GetLinks() << ")" << endl;
         else
-            cmakelists << "target_link_libraries(" << info.targets[i].GetName() << " " << info.targets[i].GetLinks() << ")" << endl;
+            if (info.targets[i].GetLinks() != "")
+                cmakelists << "target_link_libraries(" << info.targets[i].GetName() << " " << info.targets[i].GetLinks() << ")" << endl;
     }
 
     for (int i = 0; i < info.commandName.size(); i++) {
         cmakelists << "set(" << info.commandName[i] << ")" << endl;
-        cmakelists << "execute_progress(COMMAND " << info.commandValue[i] << " WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} RESULT_VARIABLE $(" << info.commandName[i] << "))" << endl;
+        cmakelists << "execute_process(COMMAND " << info.commandValue[i] << " WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} RESULT_VARIABLE ${" << info.commandName[i] << "})" << endl;
     }
 
     cmakelists.close();
