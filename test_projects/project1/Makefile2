@@ -1,0 +1,2 @@
+hellomake2: hellomake2.c 
+	gcc -o hellomake2 hellomake2.c 

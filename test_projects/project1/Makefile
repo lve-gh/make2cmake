@@ -2,6 +2,8 @@
 
 # Regular compilation command, just as it would be written on
 # the command line
+include Makefile2
+
 hellomake: hellomake.c hellofunc.c
 	gcc -o hellomake hellomake.c hellofunc.c
 

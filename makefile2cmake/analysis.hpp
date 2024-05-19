@@ -8,16 +8,20 @@ using std::string;
 using std::vector;
 using namespace std::filesystem;
 
-bool IsCPP(string word);
+bool IsCPP(string &word);
 
-bool IsHeader(string word);
+bool IsHeader(string &word);
 
-bool IsEqualsSign(string word);
+bool IsAssigment(string &word);
 
-bool IsCommand(string word);
+bool IsIFDEF(string &word);
 
-bool IsTarget(string word);
+bool IsInclude(string &word);
+
+bool IsCommand(string &word);
+
+bool IsTarget(string &word);
 
 bool ReadAllFiles(vector<string>& files);
 
-string IsContains(string word, vector<string> words);
+string IsContains(string &word, vector<string> &words);

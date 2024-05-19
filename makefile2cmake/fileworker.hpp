@@ -13,4 +13,6 @@ using std::endl;
 
 vector<string> MakefileReader(string str);
 
-void CMakeListsCreater(Info info);
+//void CMakeListsCreater(Info &info);
+
+void CMakeListsCreaterNew(vector<Info>& info);

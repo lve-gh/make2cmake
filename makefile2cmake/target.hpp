@@ -13,8 +13,8 @@ private:
     string name = "";
     string links = "";
 public:
-    void SetName(string name);
-    void SetLinks(string targets);
+    void SetName(string &name);
+    void SetLinks(string &targets);
     vector<string> GetCPPS();
     vector<string> GetHeaders();
     string GetName();

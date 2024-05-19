@@ -1,6 +1,6 @@
 #include "analysis.hpp"
 
-bool IsCPP(string word) {
+bool IsCPP(string &word) {
     std::istringstream iss(word);
     std::string token;
     while (std::getline(iss, token, '.')) {
@@ -11,7 +11,7 @@ bool IsCPP(string word) {
     return false;
 }
 
-bool IsHeader(string word) {
+bool IsHeader(string &word) {
     std::istringstream iss(word);
     std::string token;
     while (std::getline(iss, token, '.')) {
@@ -22,13 +22,31 @@ bool IsHeader(string word) {
     return false;
 }
 
-bool IsEqualsSign(string word) {
+bool IsAssigment(string &word) {
     if (word.find("=") != std::string::npos && !(word.find(":=") != std::string::npos))
         return true;
     return false;
 }
 
-bool IsCommand(string word) {
+bool IsIFDEF(string &word) {
+    if (word.find("ifdef") != std::string::npos)
+        return true;
+    return false;
+}
+
+bool IsENDIF(string& word) {
+    if (word.find("endif") != std::string::npos)
+        return true;
+    return false;
+}
+
+bool IsInclude(string &word) {
+    if (word.find("include") != std::string::npos)
+        return true;
+    return false;
+}
+
+bool IsCommand(string &word) {
     std::istringstream iss(word);
     std::string token;
     if (word.find("./") != std::string::npos)
@@ -36,7 +54,7 @@ bool IsCommand(string word) {
     return false;
 }
 
-bool IsTarget(string word) {
+bool IsTarget(string &word) {
     std::istringstream iss(word);
     std::string token;
     if (word.find(":") != std::string::npos)
@@ -53,7 +71,7 @@ bool ReadAllFiles(vector<string>& files) {
     return true;
 }
 
-string IsContains(string word, vector<string> words) {
+string IsContains(string &word, vector<string> &words) {
     for (int i = 0; i < words.size(); i++) {
         if (words[i].find(word) != string::npos)
             return words[i];

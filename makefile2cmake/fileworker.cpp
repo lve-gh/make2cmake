@@ -1,5 +1,5 @@
 #include "fileworker.hpp"
-
+#include <iostream>
 vector<string> MakefileReader(string str) {
     ifstream makefile;
     vector<string> makefileWords;
@@ -11,16 +11,20 @@ vector<string> MakefileReader(string str) {
     makefile.close();
     return makefileWords;
 }
-
-void CMakeListsCreater(Info info) {
+/*
+void CMakeListsCreater(Info &info) {
     ofstream cmakelists;
     cmakelists.open("CMakeLists.txt");
     cmakelists << "cmake_minimum_required(VERSION 3.12)" << endl;
     string projectName = "projectName";
     cmakelists << "project(" << projectName << ")" << endl;
-
+    //
     for (int i = 0; i < info.varName.size(); i++)
         cmakelists << "set(" << info.varName[i] << " " << info.varValue[i] << ")" << endl;
+    //
+    for (int i = 0; i < info.ifdefVar.size(); i++) {
+        cmakelists << "if(" << info.ifdefVar[i] << ")" << endl;
+    }
 
     for (int i = 0; i < info.targets.size(); i++) {
         if(info.targets[i].GetLinks().find(".cpp") != std::string::npos || 
@@ -39,4 +43,17 @@ void CMakeListsCreater(Info info) {
     }
 
     cmakelists.close();
+}*/
+
+void CMakeListsCreaterNew(vector<Info>& info) {
+    ofstream cmakelists;
+    cmakelists.open("CMakeLists.txt");
+    cmakelists << "cmake_minimum_required(VERSION 3.29)" << endl;
+
+    string projectName = "projectName";
+    cmakelists << "project(" << projectName << ")" << endl;
+    //std::cout << info.size();
+    for (int i = 0; i < info.size(); i++) {
+        cmakelists << info[i].WriteCMake() << endl;
+    }
 }
