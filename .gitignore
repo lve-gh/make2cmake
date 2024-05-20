@@ -34,9 +34,9 @@
 *.vcxproj
 *.vcxproj.filters
 *.vcxproj.users
-makefile2cmake.vcxproj
-makefile2cmake.vcxproj.filters
-makefile2cmake.vcxproj.users
+makefile2cmake/makefile2cmake.vcxproj
+makefile2cmake/makefile2cmake.vcxproj.filters
+makefile2cmake/makefile2cmake.vcxproj.users
 vs
 vs/
 Debug
