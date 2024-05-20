@@ -16,6 +16,8 @@ bool IsAssigment(string &word);
 
 bool IsIFDEF(string &word);
 
+bool IsENDIF(string& word);
+
 bool IsInclude(string &word);
 
 bool IsCommand(string &word);

@@ -12,15 +12,18 @@ using namespace std::filesystem;
 
 int StringAnalysis(string word);
 void ConvertingString(string makefileWord, int line, vector<string> &makefileWords, vector<Info> &info);
-
+void StringProcessing(string& str);
 int main(int argc, char* argv[])
 {
     ifstream makefile;
     vector<string> makefileWords = MakefileReader("Makefile");
-    //cout << makefileWords
-    //for (int i = 0; i < makefileWords.size(); i++) {
-    //    cout << makefileWords[i] << endl;
-    //}
+    for (int i = 0; i < makefileWords.size(); i++) {
+        StringProcessing(makefileWords[i]);
+    }
+
+    for (int i = 0; i < makefileWords.size(); i++) {
+        cout << makefileWords[i] << endl;
+    }
 
     vector<Info> info;
     for (int i = 0; i < makefileWords.size(); i++) {
@@ -142,4 +145,28 @@ void ConvertingString(string makefileWord, int line, vector<string> &makefileWor
     default:
         break;
     }
+}
+
+void StringProcessing(string& str) {
+    int posComment = str.find("#");
+    if (posComment != string::npos)
+    {
+        str = str.substr(0, posComment);
+    }
+
+    std::string result(str);
+
+    size_t posLink = result.find("$(");
+    while (posLink != std::string::npos) {
+        result.replace(posLink, 2, "${");
+        posLink = result.find("$(", posLink);
+    }
+    str = result;
+
+    posLink = result.find(")");
+    while (posLink != std::string::npos) {
+        result.replace(posLink, sizeof(")"), "} ");
+        posLink = result.find(")", posLink);
+    }
+    str = result;
 }
