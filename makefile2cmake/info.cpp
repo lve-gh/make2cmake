@@ -19,6 +19,7 @@ string Info::WriteCMake() {
 	case ENDIF: {
 		return("endif()");
 	}
+	/*
 	case TARGET: {
 		if (this->target.GetLinks().find(".cpp") != std::string::npos ||
 			this->target.GetLinks().find(".c") != std::string::npos ||
@@ -28,6 +29,10 @@ string Info::WriteCMake() {
 		else {
 			return "";
 		}
+		break;
+	} */
+	case TARGET: {
+		return this->target;
 		break;
 	}
 	case ASSIGMENT: {

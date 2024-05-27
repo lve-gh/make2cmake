@@ -3,7 +3,7 @@
 #include <map>
 #include "target.hpp"
 
-enum CONTENT { UNDEFINED = 0, INCLUDE, IFDEF, ENDIF ,COMMAND, TARGET, ASSIGMENT };
+enum CONTENT { UNDEFINED = 0, INCLUDE, IFDEF, ENDIF ,COMMAND, RECIPE, TARGET, ASSIGMENT };
 
 using std::vector;
 using std::pair;
@@ -12,7 +12,8 @@ class Info {
 public:
 	//private: 
 	pair<string, string> assigment;
-	Target target;
+	//Target target;
+	string target;
 	pair<string, string> command;
 	string ifdefVar = "";
 	int token = UNDEFINED;

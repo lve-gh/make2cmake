@@ -1,11 +1,11 @@
 #include "target.hpp"
 
-    void Target::SetName(string &name) {
+    void Target::SetName(string name) {
         this->name = name;
         this->empty = false;
     }
 
-    void Target::SetLinks(string &links) {
+    void Target::SetLinks(string links) {
         this->links = links;
         this->empty = false;
     }
