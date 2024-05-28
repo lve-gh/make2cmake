@@ -151,7 +151,7 @@ int LinksInfo(string& str) {
         words.push_back(wordInString);
     }
     for (int i = 0; i < words.size(); i++) {
-        if (words[i].find(".hpp") || words[i].find(".h") || words[i].find(".cpp") || words[i].find(".c"))
+        if (words[i].find(".hpp") != string::npos || words[i].find(".h") != string::npos || words[i].find(".cpp") != string::npos || words[i].find(".c") != string::npos)
             cppsCount++;
         else if (words[i] != "")
             objectsCount++;

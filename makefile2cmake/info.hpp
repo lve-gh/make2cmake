@@ -10,9 +10,7 @@ using std::pair;
 
 class Info {
 public:
-	//private: 
 	pair<string, string> assigment;
-	//Target target;
 	string target;
 	pair<string, string> command;
 	string ifdefVar = "";

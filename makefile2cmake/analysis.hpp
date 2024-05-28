@@ -26,8 +26,6 @@ bool IsInclude(string &word);
 
 bool IsCommand(string &word);
 
-//bool IsRecipe(string& word);
-
 bool IsTarget(string &word);
 
 bool IsWithCommand(string& word);

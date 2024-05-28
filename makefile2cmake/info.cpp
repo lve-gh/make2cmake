@@ -19,18 +19,6 @@ string Info::WriteCMake() {
 	case ENDIF: {
 		return("endif()");
 	}
-	/*
-	case TARGET: {
-		if (this->target.GetLinks().find(".cpp") != std::string::npos ||
-			this->target.GetLinks().find(".c") != std::string::npos ||
-			this->target.GetLinks().find(".h") != std::string::npos ||
-			this->target.GetLinks().find(".hpp") != std::string::npos) 
-			return("add_library(" + this->target.GetName() + " " + this->target.GetLinks() + ")");
-		else {
-			return "";
-		}
-		break;
-	} */
 	case TARGET: {
 		return this->target;
 		break;
