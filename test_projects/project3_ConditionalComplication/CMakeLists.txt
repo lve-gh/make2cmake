@@ -5,3 +5,4 @@ set(foo   bar)
 if(${foo} )
 set(frobozz   yes)
 endif()
+

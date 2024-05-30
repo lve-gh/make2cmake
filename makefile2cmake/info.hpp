@@ -3,18 +3,17 @@
 #include <map>
 #include "target.hpp"
 
-enum CONTENT { UNDEFINED = 0, INCLUDE, IFDEF, ENDIF ,COMMAND, RECIPE, TARGET, ASSIGMENT };
+enum CONTENT { UNDEFINED = 0, INCLUDE, IFDEF, ENDIF, TARGET, ASSIGMENT };
 
 using std::vector;
 using std::pair;
 
-class Info {
-public:
+struct Info {
 	pair<string, string> assigment;
 	string target;
 	pair<string, string> command;
 	string ifdefVar = "";
 	int token = UNDEFINED;
-	string version = "3.29";
+	string version = "3.02";
 	string WriteCMake();
 };

@@ -10,7 +10,7 @@ enum TARGET_ANALYSIS { WITH_COMPILER = 0, WITH_COMMAND, ONLY_OBJECTS, ONLY_CPPS,
 
 using std::string;
 using std::vector;
-using namespace std::filesystem;
+//using namespace std::filesystem;
 
 bool IsCPP(string &word);
 
@@ -23,8 +23,6 @@ bool IsIFDEF(string &word);
 bool IsENDIF(string& word);
 
 bool IsInclude(string &word);
-
-bool IsCommand(string &word);
 
 bool IsTarget(string &word);
 

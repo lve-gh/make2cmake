@@ -5,15 +5,15 @@
 #include "analysis.hpp"
 #include "fileworker.hpp"
 #include "info.hpp"
-using namespace std;
-using namespace std::filesystem;
+using std::stringstream;
+
 
 int StringAnalysis(string word);
 void ConvertingString(string makefileWord, int line, vector<string> &makefileWords, vector<Info> &info, string compiler, vector<string>& targets, vector<string>& rulesArg);
 void StringProcessing(string& str);
-vector<string> GraphAnalysis(vector<pair<string, pair<vector<string>, vector<string>>>>& graph, string compiler);
-void PrintGraph(vector<pair<string, pair<vector<string>, vector<string>>>>& graph);
 string ObjectProcessing(string str);
+string RuleChecking(string str);
+
 int main()
 {
     ifstream infoFile;
@@ -43,46 +43,47 @@ int main()
     std::reverse(targets.begin(), targets.end());
     std::reverse(rules.begin(), rules.end());
 
-    for (int i = 0; i < targets.size() - 1; i++) {
-        switch (LinksInfo(rules[i])) {
-        case ONLY_CPPS: {
-            Info infoTemp;
-            infoTemp.target = "add_library(" + targets[i] + " OBJECT " + rules[i] + ")";
-            infoTemp.token = TARGET;
-            infoTemp.version = "3.0.2";
-            info.push_back(infoTemp);
-            break;
-        }
-        case ONLY_OBJECTS: {
-            Info infoTemp;
-            infoTemp.target = "add_library(" + targets[i] + " " + ObjectProcessing(rules[i]) + ")";
-            infoTemp.token = TARGET;
-            infoTemp.version = "3.0.2";
-            info.push_back(infoTemp);
-            break;
-        }
-        case MIXED: {
-            break;
-        }
-        default:
-            break;
+
+    for (int i = 0; i < targets.size() - 1 && targets.size() != 0; i++) {
+        if (rules.size() >= i + 1) {
+            switch (LinksInfo(rules[i])) {
+            case ONLY_CPPS: {
+                Info infoTemp;
+                infoTemp.target = "add_library(" + targets[i] + " OBJECT " + rules[i] + ")";
+                infoTemp.token = TARGET;
+                infoTemp.version = "3.0.2";
+                info.push_back(infoTemp);
+                break;
+            }
+            case ONLY_OBJECTS: {
+                Info infoTemp;
+                infoTemp.target = "add_library(" + targets[i] + " " + ObjectProcessing(rules[i]) + ")";
+                infoTemp.token = TARGET;
+                infoTemp.version = "3.0.2";
+                info.push_back(infoTemp);
+                break;
+            }
+            case MIXED: {
+                Info infoTemp;
+                infoTemp.target = "add_library(" + targets[i] + " " + RuleChecking((rules[i])) + ")";
+                infoTemp.token = TARGET;
+                infoTemp.version = "3.0.2";
+                info.push_back(infoTemp);
+                break;
+            }
+            default:
+                break;
+            }
         }
     }
 
+
     Info infoTemp;
-    infoTemp.target = "add_executable(" + targets[targets.size() - 1] + " " + rules[rules.size() - 1] + ")";
+    if(targets.size() != 0 && rules.size())
+        infoTemp.target = "add_executable(" + targets[targets.size() - 1] + " " + RuleChecking(rules[rules.size() - 1]) + ")";
     infoTemp.token = TARGET;
     infoTemp.version = "3.0.2";
     info.push_back(infoTemp);
-
-    //cout << targetsInfo.size();
-    //for (int i = 0; i < targets.size(); i++) {
-    //    Info infoTemp;
-    //    infoTemp.target = targets[i];
-    //    infoTemp.token = TARGET;
-    //    infoTemp.version = "3.0.2";
-    //    info.push_back(infoTemp);
-    //}
 
     CMakeListsCreaterNew(info);
     info.clear();
@@ -92,9 +93,7 @@ int main()
 
 
  int StringAnalysis(string word) {
-     if (IsCommand(word))
-         return COMMAND;
-     else if (IsInclude(word))
+     if (IsInclude(word))
          return INCLUDE;
      else if (IsIFDEF(word))
          return IFDEF;
@@ -119,20 +118,6 @@ int main()
 
 void ConvertingString(string makefileWord, int line, vector<string> &makefileWords, vector<Info> &info, string compiler, vector<string>& targets, vector<string>& rulesArg) {
     switch (StringAnalysis(makefileWord)) {
-    case COMMAND: {
-        for(size_t i = 1; line + i < makefileWords.size() && StringAnalysis(makefileWords[line + i]) == UNDEFINED; i++)
-            makefileWord += " " + makefileWords[line + i];
-        size_t pos = makefileWord.find("=");
-        if (pos != string::npos)
-        {
-            Info infoTemp;
-            infoTemp.command = make_pair (makefileWord.substr(0, pos), makefileWord.substr(pos + 1));
-            infoTemp.token = COMMAND;
-            infoTemp.version = "3.0.2";
-            info.push_back(infoTemp);
-        }
-        break;
-    }
     case INCLUDE: {
         for (size_t i = 1; line + i < makefileWords.size() && StringAnalysis(makefileWords[line + i]) == UNDEFINED; i++)
             makefileWord += " " + makefileWords[line + i];
@@ -193,17 +178,17 @@ void ConvertingString(string makefileWord, int line, vector<string> &makefileWor
             Info infoTemp;
             infoTemp.token = TARGET;
             infoTemp.version = "3.0.2";
-
             bool withCommands = false;
             for (int j = 0; j < recipes.size(); j++) {
                 if (IsWithCommand(recipes[j])) {
                     withCommands = true;
                     if (!IsWithCompiler(recipes[j], compiler)) {
-
                         infoTemp.target = "add_custom_command(OUTPUT " + ReturnCPPFromString(recipes[j]) + " COMMAND " + ReturnCommandFromString(recipes[j]) + ")";
+                        info.push_back(infoTemp);
                     }
                     else {
                         infoTemp.target = "add_custom_target(command COMMAND " + ReturnCommandFromString(rules[j]) + ")";
+                        info.push_back(infoTemp);
                     }
                 }
             }
@@ -218,75 +203,6 @@ void ConvertingString(string makefileWord, int line, vector<string> &makefileWor
         }
         break;
     }
-    /*
-    case TARGET: {
-        size_t pos = makefileWord.find(":");
-        if (pos != string::npos)
-        {
-            string rulesTemp = makefileWord.substr(0, pos);
-            vector<string> rules;
-            stringstream ss(makefileWord.substr(pos + 1));
-            while (getline(ss, rulesTemp, ' ')) {
-                rules.push_back(rulesTemp);
-            }
-
-            string target = makefileWord.substr(0, pos);
-
-            vector<string> recipes;
-            for (size_t i = 1; line + i < makefileWords.size() && StringAnalysis(makefileWords[line + i]) != TARGET && StringAnalysis(makefileWords[line + i]) != ASSIGMENT; i++)
-                recipes.push_back(makefileWords[line + i]);
-
-
-            Info infoTemp;
-            infoTemp.token = TARGET;
-            infoTemp.version = "3.0.2";
-
-            string allRules;
-            bool withCommands = false;
-                for (int j = 0; j < recipes.size(); j++) {
-                    if (IsWithCommand(recipes[j])) {
-                        withCommands = true;
-                        if (!IsWithCompiler(recipes[j], compiler)) {
-                            
-                            //infoTemp.target = "add_custom_command(OUTPUT " + ReturnCPPFromString(recipes[j]) + " COMMAND " + ReturnCommandFromString(recipes[j]) + ")";
-                            //targets.emplace_back("add_custom_command(OUTPUT " + ReturnCPPFromString(recipes[j]) + " COMMAND " + ReturnCommandFromString(recipes[j]) + ")");
-                        }
-                        else {
-                            //infoTemp.target = "add_custom_target(command COMMAND " + ReturnCommandFromString(rules[j]) + ")";
-                            //targets.emplace_back("add_custom_target(command COMMAND " + ReturnCommandFromString(rules[j]) + ")");
-                            //targets.emplace_back("$<TARGET_OBJECTS:" + ReturnCommandFromString(rules[j]) + "> ");
-                        }
-                    }
-                }
-                if (withCommands == false) {
-                    for (int j = 0; j < rules.size(); j++) {
-                        if (LinksInfo(rules[j]) == ONLY_OBJECTS) {
-                            //targets.emplace_back("target_link_libraries(" + target + " " + rules[j] + ")");
-                            allRules += rules[j];
-                            //targets.emplace_back("$<TARGET_OBJECTS:" + rules[j] + "> ");
-                        }
-                        if (LinksInfo(rules[j]) == ONLY_OBJECTS)
-                            rules.emplace_back(allRules);
-                        if (LinksInfo(rules[j]) == ONLY_CPPS) {
-                            //infoTemp.target = "add_library(" + target + " " + rules[j] + ")";
-                            allRules += rules[j];
-                            //targets.emplace_back("add_library(" + target + " " + rules[j] + ")");
-                        }
-                        if (LinksInfo(rules[j]) == ONLY_CPPS)
-                            rules.emplace_back(allRules);
-                        if (LinksInfo(rules[j]) == MIXED) {
-                            //infoTemp.target = "target_link_libraries(" + target + " " + rules[j] + ")";
-                            targets.emplace_back("target_link_libraries(" + target + " " + rules[j] + ")");
-                        }
-                    }
-                }
-                withCommands = false;
-                rules.clear();
-                recipes.clear();
-        }
-        break;
-    }
-    */
     case ASSIGMENT: {
         for (size_t i = 1; line + i < makefileWords.size() && StringAnalysis(makefileWords[line + i]) == UNDEFINED; i++)
             makefileWord += " " + makefileWords[line + i];
@@ -333,58 +249,6 @@ void StringProcessing(string& str) {
     str = result;
 }
 
-vector<string> GraphAnalysis(vector<pair<string, pair<vector<string>, vector<string>>>>& graph, string compiler) {
-    vector<string> targetsInfo;
-    string info;
-    bool withCommands = false;
-    for (int i = 0; i < graph.size(); i++) {
-        for (int j = 0; j < graph[i].second.second.size(); j++) {
-            if (IsWithCommand(graph[i].second.second[j])) {
-                withCommands = true;
-                if (!IsWithCompiler(graph[i].second.second[j], compiler)) {
-                    info = "add_custom_command(OUTPUT " + ReturnCPPFromString(graph[i].second.second[j]) + " COMMAND " + ReturnCommandFromString(graph[i].second.second[j]) + ")";
-                    targetsInfo.push_back(info);
-                }
-                else {
-                    info = "add_custom_target(command COMMAND " + ReturnCommandFromString(graph[i].second.second[j]) + ")";
-                    targetsInfo.push_back(info);
-                }
-            }
-        }
-        if (withCommands == false) {
-            for (int j = 0; j < graph[i].second.first.size(); j++) {
-                if (LinksInfo(graph[i].second.first[j]) == ONLY_OBJECTS) {
-                    info = "target_link_libraries(" + graph[i].first + " " + graph[i].second.first[j] + ")";
-                    targetsInfo.push_back(info);
-                }
-                if (LinksInfo(graph[i].second.first[j]) == ONLY_CPPS) {
-                    info = "add_executable(" + graph[i].first + " " + graph[i].second.first[j] + ")";
-                    targetsInfo.push_back(info);
-                }
-                if (LinksInfo(graph[i].second.first[j]) == MIXED) {
-                    info = "target_link_libraries(" + graph[i].first + " " + graph[i].second.first[j] + ")";
-                    targetsInfo.push_back(info);
-                }
-            }
-        }
-        withCommands = false;
-    }
-    return targetsInfo;
-}
-
-
-void PrintGraph(vector<pair<string, pair<vector<string>, vector<string>>>>& graph) {
-    for (int i = 0; i < graph.size(); i++) {
-        cout << graph[i].first << " : ";
-        for (int j = 0; j < graph[i].second.first.size(); j++) {
-            cout << graph[i].second.first[j] << " ";
-        }
-        for (int j = 0; j < graph[i].second.second.size(); j++) {
-            cout << graph[i].second.second[j] << " ";
-        }
-        cout << endl;
-    }
-}
 
 string ObjectProcessing(string str) {
     vector<string> words;
@@ -410,6 +274,18 @@ string ObjectProcessing(string str) {
     str = "";
     for (int i = 0; i < words.size(); i++) {
         str += words[i] + " ";
+    }
+    return str;
+}
+
+string RuleChecking(string str) {
+    vector<string> words = SplitString(str);
+    str = "";
+    for (int i = 0; i < words.size(); i++) {
+        if (words[i].find(".cpp") != std::string::npos || words[i].find(".hpp") != std::string::npos || words[i].find(".c") != std::string::npos || words[i].find(".h") != std::string::npos)
+            str += " " + words[i] + " ";
+        else
+            str += " $<TARGET_OBJECTS> " + words[i];
     }
     return str;
 }

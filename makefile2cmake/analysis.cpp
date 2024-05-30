@@ -1,5 +1,7 @@
 #include "analysis.hpp"
-//#include <sstream>
+
+using std::filesystem::recursive_directory_iterator;
+using std::filesystem::begin;
 
 bool IsCPP(string &word) {
     std::istringstream iss(word);
@@ -47,15 +49,6 @@ bool IsInclude(string &word) {
     return false;
 }
 
-bool IsCommand(string &word) {
-    std::istringstream iss(word);
-    std::string token;
-    if (word.find("./") != std::string::npos)
-        return true;
-    return false;
-}
-
-
 bool IsWithCommand(string& word) {
     std::istringstream iss(word);
     std::string token;
@@ -80,9 +73,6 @@ bool IsWithCompiler(string& word, string& compiler) {
     return false;
 }
 
-//bool IsRecipe(string& word) {
-//
-//}
 
 bool IsTarget(string &word) {
     std::istringstream iss(word);
@@ -153,6 +143,7 @@ int LinksInfo(string& str) {
     for (int i = 0; i < words.size(); i++) {
         if (words[i].find(".hpp") != string::npos || words[i].find(".h") != string::npos || words[i].find(".cpp") != string::npos || words[i].find(".c") != string::npos)
             cppsCount++;
+        //else
         else if (words[i] != "")
             objectsCount++;
     }
@@ -161,8 +152,9 @@ int LinksInfo(string& str) {
         return ONLY_OBJECTS;
     if (objectsCount == 0 && cppsCount != 0)
         return ONLY_CPPS;
-    if (objectsCount == 0 && cppsCount != 0)
+    if (objectsCount != 0 && cppsCount != 0) {
         return MIXED;
+    }
     return NO_INFO;
 }
 

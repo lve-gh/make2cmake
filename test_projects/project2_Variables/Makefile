@@ -1,17 +1,9 @@
-CC=g++
+all: target1 target2
+		gcc -o target1 target2
 
-CFLAGS=-c -Wall
 
-all: hello
-
-hello: main.o factorial.o hello.o
-	$(CC) main.o factorial.o hello.o -o hello
-
-main.o: main.cpp
-	$(CC) $(CFLAGS) main.cpp
-
-factorial.o: factorial.cpp
-	$(CC) $(CFLAGS) factorial.cpp
-
-hello.o: hello.cpp
-	$(CC) $(CFLAGS) hello.cpp
+target1: target2.o main.cpp
+        gcc -o target target2.o main.cpp
+		
+target2: hello.cpp
+		gcc -c hello.cpp

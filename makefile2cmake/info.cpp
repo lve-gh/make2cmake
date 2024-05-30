@@ -4,10 +4,6 @@
 string Info::WriteCMake() {
 	switch (this -> token)
 	{
-	case COMMAND: {
-		return("execute_process(COMMAND " + this->command.first + " WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} RESULT_VARIABLE ${" + this->command.second + "})");
-		break;
-	}
 	case INCLUDE: {
 		return "";
 		break;

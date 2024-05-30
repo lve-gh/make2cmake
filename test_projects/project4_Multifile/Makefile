@@ -5,7 +5,7 @@
 include Makefile2
 
 hellomake: hellomake.c hellofunc.c
-	gcc -o hellomake hellomake.c hellofunc.c hellomake.h
+	gcc -o hellomake hellomake.c hellofunc.c 
 
 # Target to clean files created during compilation
 clean:
