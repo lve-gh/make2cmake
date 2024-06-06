@@ -1,2 +1,2 @@
-all: analysis.cpp
+allT: analysis.cpp
 		g++ -c -o $@ $<
