@@ -1,7 +1,5 @@
-#include "hellofunc.h"
-
+#include <stdio.h>
 int main() {
-    myPrintHelloMake();
-
-    return(0);
+   printf("Hello, World!");
+   return 0;
 }
