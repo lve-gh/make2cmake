@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.29)
 project(projectName)
 add_library(target2 OBJECT  hello.cpp)
-add_library(target1  $<TARGET_OBJECTS> target2.o main.cpp )
-add_executable(general  $<TARGET_OBJECTS:target1> $<TARGET_OBJECTS:target2>)
+add_library(target1  $<TARGET_OBJECTS:target2.o>)
+add_executable(general  $<TARGET_OBJECTS:target1> $<TARGET_OBJECTS:target2> main.cpp)
