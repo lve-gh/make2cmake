@@ -1,2 +1,2 @@
-allT: analysis.cpp
-		g++ -c -o $@ $<
+general: analysis.cpp
+		g++ -c main.cpp –o general
