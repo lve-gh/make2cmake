@@ -41,7 +41,7 @@ jobs:
 
       - name: Build4
         run: |
-          cd test_projects/Multifile
+          cd test_projects/project4_Multifile
           mkdir build
           cd build
           cmake ..
