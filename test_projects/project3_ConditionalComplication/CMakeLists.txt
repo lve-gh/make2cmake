@@ -6,3 +6,4 @@ if(${foo} )
 set(frobozz   yes)
 endif()
 
+add_executable(general main.cpp)
