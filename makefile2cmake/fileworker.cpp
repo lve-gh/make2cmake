@@ -19,7 +19,7 @@ void CMakeListsCreaterNew(vector<Info>& info) {
 
     string projectName = "projectName";
     cmakelists << "project(" << projectName << ")" << endl;
-    for (int i = 0; i < info.size(); i++) {
+    for (size_t i = 0; i < info.size(); i++) {
         cmakelists << info[i].WriteCMake() << endl;
     }
 }

@@ -9,7 +9,7 @@ using std::stringstream;
 
 
 int StringAnalysis(string word);
-void ConvertingString(string makefileWord, int line, vector<string> &makefileWords, vector<Info> &info, string compiler, vector<string>& targets, vector<string>& rulesArg);
+void ConvertingString(string makefileWord, size_t line, vector<string> &makefileWords, vector<Info> &info, string compiler, vector<string>& targets, vector<string>& rulesArg);
 void StringProcessing(string& str);
 string ObjectProcessing(string str);
 string RuleChecking(string str);
@@ -26,7 +26,7 @@ int main()
 
     ifstream makefile;
     vector<string> makefileWords = MakefileReader(MakefileName);
-    for (int i = 0; i < makefileWords.size(); i++) {
+    for (size_t i = 0; i < makefileWords.size(); i++) {
         StringProcessing(makefileWords[i]);
     }
 
@@ -36,7 +36,7 @@ int main()
 
     vector<string> targets;
     vector<string> rules;
-    for (int i = 0; i < makefileWords.size(); i++) {
+    for (size_t i = 0; i < makefileWords.size(); i++) {
         ConvertingString(makefileWords[i], i, makefileWords, info, compiler, targets, rules);
     }
 
@@ -44,7 +44,7 @@ int main()
     std::reverse(rules.begin(), rules.end());
 
 
-    for (int i = 0; i < targets.size() - 1 && targets.size() != 0; i++) {
+    for (size_t i = 0; i < targets.size() - 1 && targets.size() != 0; i++) {
         if (rules.size() >= i + 1) {
             switch (LinksInfo(rules[i])) {
             case ONLY_CPPS: {
@@ -116,7 +116,7 @@ int main()
          return NO_INFO;
  }
 
-void ConvertingString(string makefileWord, int line, vector<string> &makefileWords, vector<Info> &info, string compiler, vector<string>& targets, vector<string>& rulesArg) {
+void ConvertingString(string makefileWord, size_t line, vector<string> &makefileWords, vector<Info> &info, string compiler, vector<string>& targets, vector<string>& rulesArg) {
     switch (StringAnalysis(makefileWord)) {
     case INCLUDE: {
         for (size_t i = 1; line + i < makefileWords.size() && StringAnalysis(makefileWords[line + i]) == UNDEFINED; i++)
@@ -131,9 +131,9 @@ void ConvertingString(string makefileWord, int line, vector<string> &makefileWor
             names.push_back(name);
         }
 
-        for (int i = 0; i < names.size(); i++) {
+        for (size_t i = 0; i < names.size(); i++) {
             vector<string> makefileWordsTemp = MakefileReader(names[i]);
-            for(int j = 0; j < makefileWordsTemp.size(); j++)
+            for(size_t j = 0; j < makefileWordsTemp.size(); j++)
                 ConvertingString(makefileWordsTemp[j], j, makefileWords, info, compiler, targets, rulesArg); 
         }
         break;
@@ -179,7 +179,7 @@ void ConvertingString(string makefileWord, int line, vector<string> &makefileWor
             infoTemp.token = TARGET;
             infoTemp.version = "3.0.2";
             bool withCommands = false;
-            for (int j = 0; j < recipes.size(); j++) {
+            for (size_t j = 0; j < recipes.size(); j++) {
                 if (IsWithCommand(recipes[j])) {
                     withCommands = true;
                     if (!IsWithCompiler(recipes[j], compiler)) {
@@ -197,7 +197,7 @@ void ConvertingString(string makefileWord, int line, vector<string> &makefileWor
                 targets.emplace_back(target);
                 rulesArg.emplace_back(rule);
             }
-            withCommands = false;
+            //withCommands = false;
             rules.clear();
             recipes.clear();
         }
@@ -267,12 +267,12 @@ string ObjectProcessing(string str) {
     if (!current_word.empty()) {
         words.push_back(current_word);
     }
-    for (int i = 0; i < words.size(); i++) {
+    for (size_t i = 0; i < words.size(); i++) {
         string temp = words[i];
         words[i] = "$<TARGET_OBJECTS:" + temp + ">";
     }
     str = "";
-    for (int i = 0; i < words.size(); i++) {
+    for (size_t i = 0; i < words.size(); i++) {
         str += words[i] + " ";
     }
     return str;
@@ -281,7 +281,7 @@ string ObjectProcessing(string str) {
 string RuleChecking(string str) {
     vector<string> words = SplitString(str);
     str = "";
-    for (int i = 0; i < words.size(); i++) {
+    for (size_t i = 0; i < words.size(); i++) {
         if (words[i].find(".cpp") != std::string::npos || words[i].find(".hpp") != std::string::npos || words[i].find(".c") != std::string::npos || words[i].find(".h") != std::string::npos)
             str += " " + words[i] + " ";
         else

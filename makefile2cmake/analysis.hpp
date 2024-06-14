@@ -4,13 +4,15 @@
 #include <sstream>
 #include <filesystem>
 #include <iostream>
+#include "target.hpp"
+#include "info.hpp"
+#include <boost/algorithm/string.hpp>
 
 enum TARGET_ANALYSIS { WITH_COMPILER = 0, WITH_COMMAND, ONLY_OBJECTS, ONLY_CPPS, MIXED, NO_INFO };
 
 
 using std::string;
 using std::vector;
-//using namespace std::filesystem;
 
 bool IsCPP(string &word);
 
