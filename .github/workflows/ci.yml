@@ -31,7 +31,7 @@ jobs:
 
       - name: Build3
         run: |
-          cd test_projects/project3_ConditionalComplications
+          cd test_projects/project3_ConditionalComplication
           mkdir build
           cd build
           cmake ..
