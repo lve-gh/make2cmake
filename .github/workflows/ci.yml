@@ -11,50 +11,9 @@ jobs:
 
       - name: Build1
         run: |
-          cd test_projects/project1_Simple
           mkdir build
           cd build
           cmake ..
-          make
-        env:
-          CI: true
-
-      - name: Build2
-        run: |
-          cd test_projects/project2_Variables
-          mkdir build
-          cd build
-          cmake ..
-          make
-        env:
-          CI: true
-
-      - name: Build3
-        run: |
-          cd test_projects/project3_ConditionalComplication
-          mkdir build
-          cd build
-          cmake ..
-          make
-        env:
-          CI: true
-
-      - name: Build4
-        run: |
-          cd test_projects/project4_Multifile
-          mkdir build
-          cd build
-          cmake ..
-          make
-        env:
-          CI: true
-
-      - name: Build5
-        run: |
-          cd test_projects/Compilation
-          mkdir build
-          cd build
-          cmake ..
-          make
+          cmake --build .
         env:
           CI: true
