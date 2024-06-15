@@ -21,7 +21,7 @@ jobs:
           
       - name: Test1
         run: |
-          cd test_projects/project2_Variables
+          cd test_projects/project1_Simple
           mkdir build
           cd build
           cmake ..
