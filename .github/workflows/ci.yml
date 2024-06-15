@@ -11,6 +11,7 @@ jobs:
 
       - name: Build1
         run: |
+          sudo apt-get install libboost-dev
           mkdir build
           cd build
           cmake ..
