@@ -10,10 +10,11 @@ using std::pair;
 
 struct Info {
 	pair<string, string> assigment;
-	string target;
+	string target = "";
 	pair<string, string> command;
 	string ifdefVar = "";
 	int token = UNDEFINED;
 	string version = "3.02";
+	string recipe = "";
 	string WriteCMake();
 };

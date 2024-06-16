@@ -8,8 +8,10 @@ makefile2cmake/analysis.cpp
 makefile2cmake/fileworker.cpp
 makefile2cmake/info.cpp
 makefile2cmake/target.cpp
+makefile2cmake/workWithStrings.cpp
 
 makefile2cmake/analysis.hpp
 makefile2cmake/fileworker.hpp
 makefile2cmake/info.hpp
-makefile2cmake/target.hpp)
+makefile2cmake/target.hpp
+makefile2cmake/workWithStrings.hpp)

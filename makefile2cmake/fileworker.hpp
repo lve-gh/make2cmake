@@ -13,4 +13,4 @@ using std::endl;
 
 vector<string> MakefileReader(string str);
 
-void CMakeListsCreaterNew(vector<Info>& info);
+void CMakeListsCreaterNew(vector<Info>& info, string compiler, string flags);

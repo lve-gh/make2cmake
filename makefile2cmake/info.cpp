@@ -16,7 +16,7 @@ string Info::WriteCMake() {
 		return("endif()");
 	}
 	case TARGET: {
-		return this->target;
+		return this->target + '\n' + this->recipe;
 		break;
 	}
 	case ASSIGMENT: {

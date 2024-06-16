@@ -27,18 +27,19 @@ int countWords(std::string& str) {
     return static_cast<int>(words.size());
 }
 
-string DefineCompiler(vector<string> input) {
+string DefineCompiler(vector<string> input, vector<string> makefile) {
     for (size_t i = 0; i < input.size(); i++) {
-        if (IsTarget(input[i]) && i != (input.size() - 1)) {
+        if (IsTarget(input[i]) && i != (input.size() - 1)&& input[i + 1].length() > 0) {
             std::vector<std::string> words;
             boost::split(words, input[i + 1], boost::is_any_of(" \t\n\r"), boost::token_compress_on);
-            return words[i];
+            //std::cout << TransformLinksInVars(words[0], makefile);
+            return words[0];
         }
 
         boost::algorithm::erase_all(input[i], " \t\r\n");
 
         if (input[i].length() > 3) {
-            if ((input[i].substr(0, 2)) == "CC=") {
+            if ((input[i].substr(0, 3)) == "CC=") {
                 return (input[i].substr(3, input[i].size() - 1));
             }
         }
@@ -47,39 +48,98 @@ string DefineCompiler(vector<string> input) {
     return "";
 }
 
-string TransformLinksInVars(string input, vector<Info> info) {
-    std::vector<std::string> words;
-    boost::algorithm::split(words, input, boost::is_any_of(" "));
-
-    for (size_t i = 0; i < words.size(); i++) {
-        for (size_t j = 0; j < words.size(); j++) {
-            if (words[i].length() > 3 && words[i].substr(0, 0) == "(" && words[i].substr(words.size() - 2, words.size() - 1) == "(") {
-                if (words[i] == info[i].assigment.second)
-                    words[i] = info[i].assigment.first;
+string TransformLinksInVars(string input, vector<string> makefile) {
+    vector<pair<string, string>> vars;
+    for (int i = 0; i < makefile.size(); i++) {
+        if (StringAnalysis(makefile[i])) {
+            size_t pos = makefile[i].find("=");
+            if (pos != string::npos)
+            {
+                pair<string, string> varTemp;
+                varTemp = make_pair (makefile[i].substr(0, pos), (makefile[i].substr(pos + 1)));
+                vars.emplace_back(varTemp);
             }
         }
     }
-    string output = "";
-    for (size_t i = 0; i < words.size(); i++) {
-        output += words[i] + " ";
+    for (int i = 0; i < vars.size(); i++) {
+        cout << input << " " << vars[i].first << " " << vars[i].second << endl;
+        if (input == "${" + vars[i].first + "}")
+            return vars[i].second;
     }
-    words.clear();
-    return output;
+    return "";
 }
 
-std::vector<std::string> extractFlags(std::string& str) {
+//string TransformLinksInVars(string input, vector<string> makefile) {
+//    std::vector<std::pair<std::string, std::string>> result;
+//
+//    for (const auto& str : makefile) {
+//        std::vector<std::string> parts;
+//        boost::split(parts, str, boost::is_any_of(" "));
+//
+//        if (parts.size() >= 3) { 
+//            std::string var_name = parts[0];
+//            std::string value = "";
+//            for (int i = 1; i < parts.size(); i++) {
+//                //cout << parts[i] << endl;
+//                value += parts[i] + " ";
+//            }
+//            result.emplace_back(var_name, value);
+//        }
+//    }
+//
+//    std::vector<std::string> words;
+//    boost::algorithm::split(words, input, boost::is_any_of(" "));
+//    for (size_t i = 0; i < words.size(); i++) {
+//        for (size_t j = 0; j < result.size(); j++) {
+//            //cout << words[i] << " " << result[j].first << endl;
+//            if (words[i] == result[j].first) {
+//                words[i] = result[j].second;
+//            }
+//        }
+//    }
+//    string output = "";
+//    for (size_t i = 0; i < words.size(); i++) {
+//        output += words[i] + " ";
+//    }
+//    words.clear();
+//    return output;
+//}
+
+std::vector<std::string> ExtractFlags(std::string str, vector<string> makefile) {
+    //for (int i = 0; i < makefile.size(); i++) {
+    //    cout << makefile[i] << endl;
+    //}
+
     std::vector<std::string> words;
     std::vector<std::string> result;
     boost::algorithm::split(words, str, boost::is_any_of(" "));
+    //cout << str << endl;
+    for (int i = 0; i < words.size(); i++)
+        //cout << words[i] << " ";
+        //words[i] = TransformLinksInVars(words[i], makefile);
+    
+
 
     for (const auto& word : words) {
-        if (word.size() > 0 && word[0] == '-') {
-            result.push_back(word);
+        //if ((word.size() > 0 && word[0] == '-') || (word.size() > 2 && word[0] == '$' && word[word.length()-1] == '}')) {
+        if ((TransformLinksInVars(word, makefile).size() > 0 && TransformLinksInVars(word, makefile)[0] == '-') || (TransformLinksInVars(word, makefile).size() > 2 && TransformLinksInVars(word, makefile)[0] == '$' && TransformLinksInVars(word, makefile)[TransformLinksInVars(word, makefile).length() - 1] == '}')) {
+            //cout << TransformLinksInVars(word, makefile) << endl;
+            result.push_back(TransformLinksInVars(word, makefile));
         }
     }
     return result;
 }
 
+string RemoveDuplicateWords(string& input_string) {
+    std::vector<std::string> words;
+    boost::split(words, input_string, boost::is_any_of(" "));
+
+    std::set<std::string> unique_words(words.begin(), words.end()); // Используем set для автоматического удаления дубликатов
+
+    std::string result = boost::algorithm::join(unique_words, " "); // Соединяем слова обратно в строку
+
+    return result;
+}
 
 
 bool IsCPP(string &word) {
