@@ -28,7 +28,7 @@ jobs:
           cmake --build .
           cd ..
           make
-          ./analysis.o
+          sudo ./analysis.o
           cd build/Debug
           run: general.exe
           
