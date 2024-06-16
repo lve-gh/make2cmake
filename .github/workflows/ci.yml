@@ -23,7 +23,7 @@ jobs:
         run: |
           cd test_projects/project1_Simple
           make
-          make ./analysis.o
+          ./analysis.exe
           mkdir build
           mkdir build/Debug
           cd build
@@ -31,8 +31,6 @@ jobs:
           cmake --build .
           cd ..
           cd build/Debug
-          script:
-            - 'general.exe'
           
         env:
           CI: true
