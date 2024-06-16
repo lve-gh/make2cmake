@@ -25,6 +25,7 @@ jobs:
           make
           make ./analysis.o
           mkdir build
+          mkdir build/Debug
           cd build
           cmake ..
           cmake --build .
