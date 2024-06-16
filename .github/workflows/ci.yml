@@ -16,6 +16,7 @@ jobs:
           cd build
           cmake ..
           cmake --build .
+          cd ..
         env:
           CI: true
           
