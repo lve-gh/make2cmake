@@ -22,13 +22,13 @@ jobs:
       - name: Test1
         run: |
           cd test_projects/project1_Simple
+          make
+          make ./analysis.o
           mkdir build
           cd build
           cmake ..
           cmake --build .
           cd ..
-          make
-          make ./analysis.o
           cd build/Debug
           run: general.exe
           
