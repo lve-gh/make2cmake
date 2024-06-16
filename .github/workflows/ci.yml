@@ -31,7 +31,8 @@ jobs:
           cmake --build .
           cd ..
           cd build/Debug
-          general.exe
+          script:
+            - 'general.exe'
           
         env:
           CI: true
