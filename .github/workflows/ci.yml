@@ -26,6 +26,11 @@ jobs:
           cd build
           cmake ..
           cmake --build .
+          cd ..
           make
+          ./analysis.o
+          cd build/Debug
+          run: general.exe
+          
         env:
           CI: true

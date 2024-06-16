@@ -101,7 +101,7 @@ void ConvertingString(string makefileWord, size_t line, vector<string>& makefile
                 if (IsWithCommand(recipes[j])) {
                     withCommands = true;
                     if (!IsWithCompiler(recipes[j], compiler)) {
-                        infoTemp.target = "add_custom_command(OUTPUT " + ReturnCPPFromString(recipes[j]) + " COMMAND " + ReturnCommandFromString(recipes[j]) + ")";
+                        infoTemp.target = "add_custom_command(OUTPUT " + ReturnCPPFromString(recipes[j]) + " COMMAND " + ReturnCommandFromString(recipes[j])+ " ARGS " + ReturnArgsFromString(recipes[j]) + ")";
                         info.push_back(infoTemp);
                     }
                     else {
@@ -116,7 +116,7 @@ void ConvertingString(string makefileWord, size_t line, vector<string>& makefile
                 rulesArg.emplace_back(rule);
                 recipesArg.emplace_back(flagsStr);
             }
-            //withCommands = false;
+
             rules.clear();
             recipes.clear();
         }

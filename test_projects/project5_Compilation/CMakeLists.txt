@@ -1,4 +1,6 @@
-cmake_minimum_required(VERSION 3.02)
+cmake_minimum_required(VERSION 3.29)
 project(projectName)
-add_custom_command(COMMAND python ARGS ..\\./generate_src.py OUTPUT ..\\src.cpp)
-add_executable(general src.cpp)
+add_custom_command(OUTPUT src.cpp COMMAND python ARGS ..\\./generate_src.py)
+
+add_executable(all  src.cpp )
+

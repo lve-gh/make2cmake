@@ -48,6 +48,8 @@ bool ReadAllFiles(vector<string>& files);
 
 string IsContains(string &word, vector<string> &words);
 
+string ReturnArgsFromString(string& str);
+
 string ReturnCommandFromString(string& str);
 
 string ReturnCPPFromString(string& str);

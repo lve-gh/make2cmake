@@ -32,7 +32,6 @@ string DefineCompiler(vector<string> input, vector<string> makefile) {
         if (IsTarget(input[i]) && i != (input.size() - 1)&& input[i + 1].length() > 0) {
             std::vector<std::string> words;
             boost::split(words, input[i + 1], boost::is_any_of(" \t\n\r"), boost::token_compress_on);
-            //std::cout << TransformLinksInVars(words[0], makefile);
             return words[0];
         }
 
@@ -62,68 +61,21 @@ string TransformLinksInVars(string input, vector<string> makefile) {
         }
     }
     for (int i = 0; i < vars.size(); i++) {
-        cout << input << " " << vars[i].first << " " << vars[i].second << endl;
         if (input == "${" + vars[i].first + "}")
             return vars[i].second;
     }
     return "";
 }
 
-//string TransformLinksInVars(string input, vector<string> makefile) {
-//    std::vector<std::pair<std::string, std::string>> result;
-//
-//    for (const auto& str : makefile) {
-//        std::vector<std::string> parts;
-//        boost::split(parts, str, boost::is_any_of(" "));
-//
-//        if (parts.size() >= 3) { 
-//            std::string var_name = parts[0];
-//            std::string value = "";
-//            for (int i = 1; i < parts.size(); i++) {
-//                //cout << parts[i] << endl;
-//                value += parts[i] + " ";
-//            }
-//            result.emplace_back(var_name, value);
-//        }
-//    }
-//
-//    std::vector<std::string> words;
-//    boost::algorithm::split(words, input, boost::is_any_of(" "));
-//    for (size_t i = 0; i < words.size(); i++) {
-//        for (size_t j = 0; j < result.size(); j++) {
-//            //cout << words[i] << " " << result[j].first << endl;
-//            if (words[i] == result[j].first) {
-//                words[i] = result[j].second;
-//            }
-//        }
-//    }
-//    string output = "";
-//    for (size_t i = 0; i < words.size(); i++) {
-//        output += words[i] + " ";
-//    }
-//    words.clear();
-//    return output;
-//}
 
 std::vector<std::string> ExtractFlags(std::string str, vector<string> makefile) {
-    //for (int i = 0; i < makefile.size(); i++) {
-    //    cout << makefile[i] << endl;
-    //}
-
     std::vector<std::string> words;
     std::vector<std::string> result;
     boost::algorithm::split(words, str, boost::is_any_of(" "));
-    //cout << str << endl;
     for (int i = 0; i < words.size(); i++)
-        //cout << words[i] << " ";
-        //words[i] = TransformLinksInVars(words[i], makefile);
     
-
-
     for (const auto& word : words) {
-        //if ((word.size() > 0 && word[0] == '-') || (word.size() > 2 && word[0] == '$' && word[word.length()-1] == '}')) {
         if ((TransformLinksInVars(word, makefile).size() > 0 && TransformLinksInVars(word, makefile)[0] == '-') || (TransformLinksInVars(word, makefile).size() > 2 && TransformLinksInVars(word, makefile)[0] == '$' && TransformLinksInVars(word, makefile)[TransformLinksInVars(word, makefile).length() - 1] == '}')) {
-            //cout << TransformLinksInVars(word, makefile) << endl;
             result.push_back(TransformLinksInVars(word, makefile));
         }
     }
@@ -134,9 +86,9 @@ string RemoveDuplicateWords(string& input_string) {
     std::vector<std::string> words;
     boost::split(words, input_string, boost::is_any_of(" "));
 
-    std::set<std::string> unique_words(words.begin(), words.end()); // Используем set для автоматического удаления дубликатов
+    std::set<std::string> unique_words(words.begin(), words.end()); 
 
-    std::string result = boost::algorithm::join(unique_words, " "); // Соединяем слова обратно в строку
+    std::string result = boost::algorithm::join(unique_words, " "); 
 
     return result;
 }
@@ -243,7 +195,7 @@ string IsContains(string &word, vector<string> &words) {
     return "";
 }
 
-string ReturnCommandFromString(string& str) {
+string ReturnArgsFromString(string& str) {
     vector<string> words = SplitString(str);
     string word;
     for (size_t i = 0; i < words.size(); i++) {
@@ -255,6 +207,14 @@ string ReturnCommandFromString(string& str) {
     }
     words.clear();
     return "";
+}
+
+string ReturnCommandFromString(string& str) {
+    vector<string> words = SplitString(str);
+    if (words.size() != 0)
+        return words[0];
+    else
+        return "";
 }
 
 string ReturnCPPFromString(string& str) {
