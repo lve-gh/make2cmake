@@ -22,9 +22,10 @@ jobs:
           
       - name: Test1
         run: |
-          cd test_projects/project1_Simple
-          make
-          ./analysis.exe
+          echo cd test_projects/project1_Simple
+          echo make
+          echo ../test_projects/project1_Simple/analysis.exe
+          ../test_projects/project1_Simple/analysis.exe 
           mkdir build
           mkdir build/Debug
           cd build
