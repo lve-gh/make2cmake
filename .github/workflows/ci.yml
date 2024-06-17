@@ -30,7 +30,7 @@ jobs:
       - name: Test1
         run: |
           echo cd test_projects/project1_Simple
-          echo make
+          echo make test_projects/project1_Simple
           ls test_projects/project1_Simple
           ./analysis
         env:
