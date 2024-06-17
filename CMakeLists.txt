@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.26)
 
 set(PROJECT_NAME CMakeConverter)
 
-find_package(Boost 1.85 REQUIRED)
+find_package(Boost)
 
 include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
 
