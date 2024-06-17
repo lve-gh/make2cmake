@@ -21,6 +21,7 @@ jobs:
           CI: true
           
       - name: Test1
+        uses: actions/upload-artifact@v3
         run: |
           echo cd test_projects/project1_Simple
           echo make
