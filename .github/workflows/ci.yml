@@ -81,3 +81,22 @@ jobs:
           ./general
         env:
           CI: true
+          
+      - name: Test3
+        run: |
+          cd test_projects/project5_Compilation
+          ls
+          make 
+          ls    
+          ./src
+          ./../../build/CMakeConverter
+          mkdir build
+          ls
+          cd build
+          ls
+          cmake ..
+          cmake --build .
+          ls
+          ./general
+        env:
+          CI: true

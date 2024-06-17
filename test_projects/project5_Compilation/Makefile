@@ -1,5 +1,10 @@
-src.cpp:
-    python ..\\./generate_src.py > src.cpp
+general: src
 
-all: src.cpp
-   gcc ..\\src.cpp
+src: src.o
+	g++ src.o -o src
+
+src.o: src.cpp
+	g++ -c src.cpp
+
+
+
