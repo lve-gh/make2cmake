@@ -25,11 +25,13 @@ jobs:
         with:
           name: my-build-artifacts 
           path: test_projects/project1_Simple
+          
+        
       - name: Test1
         run: |
           echo cd test_projects/project1_Simple
           echo make
           ls 
-          
+          ./analysis
         env:
           CI: true
