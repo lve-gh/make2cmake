@@ -82,7 +82,7 @@ jobs:
         env:
           CI: true
           
-      - name: Test3
+      - name: Test4
         run: |
           cd test_projects/project5_Compilation
           ls
