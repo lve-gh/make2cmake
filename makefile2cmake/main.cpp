@@ -78,7 +78,10 @@ int main()
 
     Info infoTemp;
     if (targets.size() != 0 && rules.size()) {
-        infoTemp.target = "add_executable(" + targets[targets.size() - 1] + " " + rules[rules.size() - 1] + ")";
+        if(targets.size() > 2)
+            infoTemp.target = "add_executable(" + targets[targets.size() - 1] + " " + rules[rules.size() - 1] + ")";
+        else
+            infoTemp.target = "add_executable(" + targets[targets.size() - 1] + " " + RuleChecking(rules[rules.size() - 1]) + ")";
         if(!IsCPP(rules[rules.size() - 1]) && !IsHeader(rules[rules.size() - 1]))
             infoTemp.target += "\ntarget_link_libraries(" + targets[targets.size() - 1] + " " + rules[rules.size() - 1] + ")";
         if (recipes[recipes.size() - 1] != "")
