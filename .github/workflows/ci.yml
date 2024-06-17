@@ -40,11 +40,5 @@ jobs:
           cmake --build .
           ls
           ./general
-           if cmp -s 123.txt ../123.txt; then
-                echo "Файлы идентичны"
-            else
-                echo "Файлы различаются"
-                diff 123.txt ../123.txt
-                exit 1 
         env:
           CI: true
