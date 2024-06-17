@@ -33,7 +33,6 @@ jobs:
           ls 
           ./analysis
           mkdir build
-          mkdir build/Debug
           cd build
           cmake ..
           cmake --build .
