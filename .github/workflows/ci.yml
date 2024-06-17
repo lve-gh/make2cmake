@@ -11,6 +11,7 @@ jobs:
 
       - name: Build
         run: |
+          vcpkg install boost
           mkdir build
           cd build
           cmake ..
