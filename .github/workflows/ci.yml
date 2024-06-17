@@ -9,15 +9,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup vcpkg
-        uses: microsoft/setup-vcpkg@v1
-        with:
-          version: '2023.05.29' 
-          architecture: 'x64' 
-
-      - name: Install Boost
-        run: vcpkg install boost 
-
       - name: Build
         run: |
           mkdir build
@@ -36,6 +27,17 @@ jobs:
       - name: Test1
         run: |
           cd test_projects/project1_Simple
-          make .
+          make
+          ls -l analysis
+          echo ../test_projects/project1_Simple/analysis
+          ../test_projects/project1_Simple/analysis
+          mkdir build
+          mkdir build/Debug
+          cd build
+          cmake ..
+          cmake --build .
+          cd ..
+          cd build/Debug
+          
         env:
           CI: true
