@@ -10,9 +10,16 @@ using std::stringstream;
 
 int main()
 {
+    std::string name;
+    std::ifstream file("info");
+    if (file.is_open()) { 
+        std::getline(file, name); 
+        file.close(); 
+    }
+
     string MakefileName = "Makefile";
     ifstream makefile;
-    vector<string> makefileWords = MakefileReader(MakefileName);
+    vector<string> makefileWords = MakefileReader(name);
     for (size_t i = 0; i < makefileWords.size(); i++) {
         StringProcessing(makefileWords[i]);
     }
