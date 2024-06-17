@@ -39,6 +39,6 @@ jobs:
           cmake ..
           cmake --build .
           ls
-          ./gerenal.exe
+          ./gerenal
         env:
           CI: true
