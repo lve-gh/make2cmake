@@ -4,7 +4,7 @@ set(PROJECT_NAME CMakeConverter)
 
 find_package(Boost)
 
-include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
+include_directories(${Boost_INCLUDE_DIR})
 
 add_executable(${PROJECT_NAME}
 makefile2cmake/main.cpp
