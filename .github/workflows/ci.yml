@@ -41,6 +41,6 @@ jobs:
           cmake ..
           cmake --build .
           ls
-          ./general
+          ./analysis
         env:
           CI: true
