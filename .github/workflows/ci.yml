@@ -32,6 +32,13 @@ jobs:
           make 
           ls 
           ./analysis
-          
+          mkdir build
+          mkdir build/Debug
+          cd build
+          cmake ..
+          cmake --build .
+          cd ..
+          cd build/Debug
+          ls
         env:
           CI: true
