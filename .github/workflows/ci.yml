@@ -21,7 +21,7 @@ jobs:
           CI: true
          
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/checkout@v3
         with:
           name: my-build-artifacts 
           path: test_projects/project1_Simple
@@ -31,7 +31,7 @@ jobs:
         run: |
           echo cd test_projects/project1_Simple
           echo make test_projects/project1_Simple
-          ls build
+          ls test_projects/project1_Simple
           ./analysis
         env:
           CI: true
