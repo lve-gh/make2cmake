@@ -15,7 +15,7 @@ vector<string> MakefileReader(string str) {
 void CMakeListsCreaterNew(vector<Info>& info, string compiler, string flags) {
     ofstream cmakelists;
     cmakelists.open("CMakeLists.txt");
-    cmakelists << "cmake_minimum_required(VERSION 3.29)" << endl;
+    cmakelists << "cmake_minimum_required(VERSION 3.02)" << endl;
     string projectName = "projectName";
     cmakelists << "project(" << projectName << ")" << endl;
     if (compiler != "") {

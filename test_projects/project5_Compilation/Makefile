@@ -6,5 +6,6 @@ src: src.o
 src.o: src.cpp
 	g++ -c src.cpp
 
-
+src.cpp:
+	python ./generate_src.py > src.cpp
 
