@@ -20,7 +20,11 @@ jobs:
         env:
           CI: true
          
-      - uses: actions/upload-artifact@v3
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: my-build-artifacts 
+          path: 
       - name: Test1
         run: |
           echo cd test_projects/project1_Simple
