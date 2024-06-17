@@ -37,8 +37,7 @@ jobs:
           cd build
           cmake ..
           cmake --build .
-          cd ..
-          cd build/Debug
+          cd Debug
           ls
         env:
           CI: true
