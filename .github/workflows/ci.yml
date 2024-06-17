@@ -21,18 +21,16 @@ jobs:
           CI: true
          
       - name: Upload artifacts
-        uses: actions/checkout@v3
+        uses: actions/upload-artifact@v3
         with:
           name: my-build-artifacts 
           path: test_projects/project1_Simple
-          
-        
       - name: Test1
         run: |
-          ls 
           echo cd test_projects/project1_Simple
+          echo make
           ls 
-          echo make test_projects/project1_Simple
           ./analysis
+          
         env:
           CI: true
