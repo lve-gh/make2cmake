@@ -33,6 +33,7 @@ jobs:
           ls    
           ./analysis
           mv ../../build/CMakeConverter ../project1_Simple
+          ./CMakeConverter
           mkdir build
           ls
           cd build
