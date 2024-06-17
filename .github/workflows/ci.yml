@@ -65,7 +65,7 @@ jobs:
           
       - name: Test3
         run: |
-          cd test_projects/project4_Mutlifile
+          cd test_projects/project4_Multifile
           ls
           make 
           ls    
