@@ -43,7 +43,7 @@ int main()
                 Info infoTemp;
                 infoTemp.target = "add_library(" + targets[i] + " OBJECT " + rules[i] + ")";
                 if(recipes[i] != "")
-                    infoTemp.recipe = "target_compile_options(" + targets[i] + " " + RemoveDuplicateWords(recipes[i]) + ")";
+                    infoTemp.recipe = "target_compile_options(" + targets[i] + " PUBLIC " + RemoveDuplicateWords(recipes[i]) + ")";
                 infoTemp.token = TARGET;
                 infoTemp.version = "3.0.2";
                 info.push_back(infoTemp);
@@ -53,7 +53,7 @@ int main()
                 Info infoTemp;
                 infoTemp.target = "add_library(" + targets[i] + " " + ObjectProcessing(rules[i]) + ")";
                 if (recipes[i] != "")
-                    infoTemp.recipe = "target_compile_options(" + targets[i] + " " + RemoveDuplicateWords(recipes[i]) + ")";
+                    infoTemp.recipe = "target_compile_options(" + targets[i] + " PUBLIC " + RemoveDuplicateWords(recipes[i]) + ")";
                 infoTemp.token = TARGET;
                 infoTemp.version = "3.0.2";
                 info.push_back(infoTemp);
@@ -63,7 +63,7 @@ int main()
                 Info infoTemp;
                 infoTemp.target = "add_library(" + targets[i] + " " + RuleChecking((rules[i])) + ")";
                 if (recipes[i] != "")
-                    infoTemp.recipe = "target_compile_options(" + targets[i] + " " + RemoveDuplicateWords(recipes[i]) + ")";
+                    infoTemp.recipe = "target_compile_options(" + targets[i] + " PUBLIC " + RemoveDuplicateWords(recipes[i]) + ")";
                 infoTemp.token = TARGET;
                 infoTemp.version = "3.0.2";
                 info.push_back(infoTemp);
@@ -78,7 +78,9 @@ int main()
 
     Info infoTemp;
     if (targets.size() != 0 && rules.size()) {
-        infoTemp.target = "add_executable(" + targets[targets.size() - 1] + " " + RuleChecking(rules[rules.size() - 1]) + ")";
+        infoTemp.target = "add_executable(" + targets[targets.size() - 1] + " " + rules[rules.size() - 1] + ")";
+        if(!IsCPP(rules[rules.size() - 1]) && !IsHeader(rules[rules.size() - 1]))
+            infoTemp.target += "\ntarget_link_libraries(" + targets[targets.size() - 1] + " " + rules[rules.size() - 1] + ")";
         if (recipes[recipes.size() - 1] != "")
             infoTemp.recipe = "target_compile_options(" + targets[recipes.size() - 1] + " " + RemoveDuplicateWords(recipes[recipes.size() - 1]) + ")";
     }

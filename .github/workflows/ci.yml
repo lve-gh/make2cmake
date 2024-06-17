@@ -43,3 +43,21 @@ jobs:
           ./analysis
         env:
           CI: true
+              - name: Test1
+        run: |
+          cd test_projects/project2_Simple
+          ls
+          make 
+          ls    
+          ./general
+          ./../../build/CMakeConverter
+          mkdir build
+          ls
+          cd build
+          ls
+          cmake ..
+          cmake --build .
+          ls
+          ./general
+        env:
+          CI: true
