@@ -32,7 +32,7 @@ jobs:
           ls 
           echo cd test_projects/project1_Simple
           echo make test_projects/project1_Simple
-          ls test_projects/project1_Simple
+          ls 
           ./analysis
         env:
           CI: true
