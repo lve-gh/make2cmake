@@ -30,7 +30,7 @@ jobs:
           cd test_projects/project1_Simple
           ls
           make 
-          ls 
+          ls    
           ./analysis
           mkdir build
           ls
@@ -38,7 +38,6 @@ jobs:
           ls
           cmake ..
           cmake --build .
-          cd Debug
           ls
           ./gerenal.exe
         env:
