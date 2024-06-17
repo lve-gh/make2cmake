@@ -101,7 +101,7 @@ void ConvertingString(string makefileWord, size_t line, vector<string>& makefile
                 if (IsWithCommand(recipes[j])) {
                     withCommands = true;
                     if (!IsWithCompiler(recipes[j], compiler)) {
-                        infoTemp.target = "add_custom_command(OUTPUT ..\\" + ReturnCPPFromString(recipes[j]) + " COMMAND " + ReturnCommandFromString(recipes[j])+ " ARGS ..\\" + ReturnArgsFromString(recipes[j]) + ")";
+                        infoTemp.target = "add_custom_command(OUTPUT ..\\\\" + ReturnCPPFromString(recipes[j]) + " COMMAND " + ReturnCommandFromString(recipes[j]) + " ARGS ..\\\\" + ReturnArgsFromString(recipes[j]) + ")";
                         info.push_back(infoTemp);
                     }
                     else {
