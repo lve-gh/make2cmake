@@ -32,8 +32,7 @@ jobs:
           make 
           ls    
           ./analysis
-          chmod +x CMakeConverter.exe
-          ./CMakeConverter.exe
+          ./CMakeConverter
           mkdir build
           ls
           cd build
