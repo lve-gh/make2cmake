@@ -32,7 +32,8 @@ jobs:
           make 
           ls    
           ./analysis
-          sudo ./CMakeConverter
+          chmod +x CMakeConverter
+          ./CMakeConverter
           mkdir build
           ls
           cd build
