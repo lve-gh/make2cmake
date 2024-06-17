@@ -32,7 +32,7 @@ jobs:
           make 
           ls    
           ./analysis
-          mv ../../build/CMakeConverter ../project1_Simple
+          ../../build/CMakeConverter
           ./CMakeConverter
           mkdir build
           ls
