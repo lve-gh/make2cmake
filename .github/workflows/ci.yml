@@ -30,7 +30,7 @@ jobs:
           cd test_projects/project1_Simple
           ls
           make 
-          ls test_projects/project1_Simple
+          ls 
           ./analysis
           
         env:
