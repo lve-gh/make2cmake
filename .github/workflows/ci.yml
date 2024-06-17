@@ -29,6 +29,7 @@ jobs:
         
       - name: Test1
         run: |
+          ls 
           echo cd test_projects/project1_Simple
           echo make test_projects/project1_Simple
           ls test_projects/project1_Simple
