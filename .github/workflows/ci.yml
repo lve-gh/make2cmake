@@ -39,5 +39,6 @@ jobs:
           cmake --build .
           cd Debug
           ls
+          ./gerenal
         env:
           CI: true
