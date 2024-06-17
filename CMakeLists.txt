@@ -1,8 +1,11 @@
 cmake_minimum_required(VERSION 3.26)
 
 set(PROJECT_NAME CMakeConverter)
+project(${PROJECT_NAME})
 
-find_package(Boost)
+find_package(Boost 1.85 REQUIRED)
+
+set(${Boost_INCLUDE_DIR} "C:\\local\\boost_1_85_0")
 
 include_directories(${Boost_INCLUDE_DIR})
 
@@ -20,4 +23,4 @@ makefile2cmake/info.hpp
 makefile2cmake/target.hpp
 makefile2cmake/workWithStrings.hpp)
 
-target_link_libraries(CMakeConverter ${Boost_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
