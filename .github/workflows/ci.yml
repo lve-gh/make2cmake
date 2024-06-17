@@ -24,7 +24,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: my-build-artifacts 
-          path: 
+          path: test_projects/project1_Simple
       - name: Test1
         run: |
           echo cd test_projects/project1_Simple
