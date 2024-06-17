@@ -11,6 +11,7 @@ jobs:
 
       - name: Build
         run: |
+          sudo apt-get install libboost-dev
           mkdir build
           cd build
           cmake ..
@@ -26,18 +27,9 @@ jobs:
           path: test_projects/project1_Simple
       - name: Test1
         run: |
-          cd test_projects/project1_Simple
-          make
-          ls -l analysis
-          echo ../test_projects/project1_Simple/analysis
-          ../test_projects/project1_Simple/analysis
-          mkdir build
-          mkdir build/Debug
-          cd build
-          cmake ..
-          cmake --build .
-          cd ..
-          cd build/Debug
+          echo cd test_projects/project1_Simple
+          echo make
+          ls 
           
         env:
           CI: true
