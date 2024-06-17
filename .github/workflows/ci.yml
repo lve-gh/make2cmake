@@ -31,7 +31,7 @@ jobs:
         run: |
           echo cd test_projects/project1_Simple
           echo make
-          ls 
+          ls test_projects/project1_Simple
           ./analysis
         env:
           CI: true
