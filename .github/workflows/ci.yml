@@ -32,8 +32,8 @@ jobs:
           make 
           ls    
           ./analysis
-          chmod +x CMakeConverter
-          ./CMakeConverter
+          cd ../../build
+          ./CMakeConverter ../test_projects/project1_Simple
           mkdir build
           ls
           cd build
