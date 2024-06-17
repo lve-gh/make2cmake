@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.26)
 
 set(PROJECT_NAME CMakeConverter)
 
+find_package(Boost)
+
 add_executable(${PROJECT_NAME}
 makefile2cmake/main.cpp
 makefile2cmake/analysis.cpp
