@@ -32,6 +32,7 @@ jobs:
           make 
           ls    
           ./analysis
+          ./CMakeConverter.exe
           mkdir build
           ls
           cd build
