@@ -29,9 +29,9 @@ jobs:
         run: |
           echo cd test_projects/project1_Simple
           echo make
-          ls -l analysis.exe
-          echo ../test_projects/project1_Simple/analysis.exe
-          ../test_projects/project1_Simple/analysis.exe 
+          ls -l analysis
+          echo ../test_projects/project1_Simple/analysis
+          ../test_projects/project1_Simple/analysis
           mkdir build
           mkdir build/Debug
           cd build

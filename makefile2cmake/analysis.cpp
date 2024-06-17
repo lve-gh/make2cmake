@@ -27,25 +27,39 @@ int countWords(std::string& str) {
     return static_cast<int>(words.size());
 }
 
-string DefineCompiler(vector<string> input, vector<string> makefile) {
-    for (size_t i = 0; i < input.size(); i++) {
-        if (IsTarget(input[i]) && i != (input.size() - 1)&& input[i + 1].length() > 0) {
+string DefineCompiler(vector<string> makefile) {
+    for (size_t i = 0; i < makefile.size(); i++) {
+        if (IsTarget(makefile[i]) && i != (makefile.size() - 1)&& makefile[i + 1].length() > 0) {
             std::vector<std::string> words;
-            boost::split(words, input[i + 1], boost::is_any_of(" \t\n\r"), boost::token_compress_on);
+            boost::split(words, makefile[i + 1], boost::is_any_of(" \t\n\r"), boost::token_compress_on);
             return words[0];
         }
 
-        boost::algorithm::erase_all(input[i], " \t\r\n");
+        boost::algorithm::erase_all(makefile[i], " \t\r\n");
 
-        if (input[i].length() > 3) {
-            if ((input[i].substr(0, 3)) == "CC=") {
-                return (input[i].substr(3, input[i].size() - 1));
+        if (makefile[i].length() > 3) {
+            if ((makefile[i].substr(0, 3)) == "CC=") {
+                return (makefile[i].substr(3, makefile[i].size() - 1));
             }
         }
 
     }
     return "";
 }
+
+string DefineFlags(vector<string> makefile) {
+    for (size_t i = 0; i < makefile.size(); i++) {
+        if (makefile[i].length() > 3) {
+            if ((makefile[i].substr(0, 7)) == "CFLAGS=") {
+                return (makefile[i].substr(7, makefile[i].size() - 1));
+            }
+        }
+    }
+    return "";
+}
+
+
+
 
 string TransformLinksInVars(string input, vector<string> makefile) {
     vector<pair<string, string>> vars;

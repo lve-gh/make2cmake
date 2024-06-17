@@ -10,14 +10,7 @@ using std::stringstream;
 
 int main()
 {
-    ifstream infoFile;
-    infoFile.open("info", ios::in | ios::out);
-    string MakefileName;
-    infoFile >> MakefileName;
-    string compiler;
-    infoFile >> compiler;
-    infoFile.close();
-
+    string MakefileName = "Makefile";
     ifstream makefile;
     vector<string> makefileWords = MakefileReader(MakefileName);
     for (size_t i = 0; i < makefileWords.size(); i++) {
@@ -32,10 +25,11 @@ int main()
     vector<string> rules;
     vector<string> recipes;
 
-    string findedCompiler = DefineCompiler(makefileWords, makefileWords);
+    string findedCompiler = DefineCompiler(makefileWords);
+    string findedFlafs = DefineFlags(makefileWords);
 
     for (size_t i = 0; i < makefileWords.size(); i++) {
-        ConvertingString(makefileWords[i], i, makefileWords, info, compiler, targets, rules, recipes);
+        ConvertingString(makefileWords[i], i, makefileWords, info, findedCompiler, targets, rules, recipes);
     }
 
     std::reverse(targets.begin(), targets.end());
@@ -93,7 +87,7 @@ int main()
     infoTemp.version = "3.0.2";
     info.push_back(infoTemp);
 
-    CMakeListsCreaterNew(info, findedCompiler, "");
+    CMakeListsCreaterNew(info, findedCompiler, findedFlafs);
     info.clear();
     return 0;
 }

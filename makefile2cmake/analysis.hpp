@@ -18,7 +18,9 @@ using std::vector;
 using std::cout;
 using std::endl;
 
-string DefineCompiler(vector<string> input, vector<string> makefile);
+string DefineCompiler(vector<string> makefile);
+
+string DefineFlags(vector<string> makefile);
 
 vector<std::string> ExtractFlags(std::string str, vector<string> makefile);
 
