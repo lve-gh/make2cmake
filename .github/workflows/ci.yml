@@ -33,7 +33,9 @@ jobs:
           ls 
           ./analysis
           mkdir build
+          ls
           cd build
+          ls
           cmake ..
           cmake --build .
           cd Debug
