@@ -1,2 +1,3 @@
-hellomake2: hellomake2.c 
-	gcc -o hellomake2 hellomake2.c 
+hellomake2.o: hellomake2.cpp 
+	g++ -c hellomake2.cpp
+

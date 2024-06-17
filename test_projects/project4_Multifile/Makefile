@@ -1,11 +1,9 @@
-general: hellomake hellomake2
-	gcc -o general hellomake hellomake2
+general: hellomake
 
-hellomake: hellomake.c hellofunc.c
-	gcc -o hellomake -c hellomake.c hellofunc.c 
+hellomake: hellofunc.o hellomake2.o
+	g++ hellofunc.o hellomake2.o -o hellomake 
+
+hellofunc.o: hellofunc.cpp 
+	g++ -c hellofunc.cpp 
 
 include Makefile2
-
-clean:
-	rm -f *.o hellomake Makefile
-	mv Makefile.orig Makefile
