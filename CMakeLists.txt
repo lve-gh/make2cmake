@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.26)
 set(PROJECT_NAME CMakeConverter)
 project(${PROJECT_NAME})
 
-find_package(Boost 1.85 REQUIRED)
+find_package(Boost)
 
 set(${Boost_INCLUDE_DIR} "C:\\local\\boost_1_85_0")
 
