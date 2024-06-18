@@ -23,8 +23,7 @@ void CMakeListsCreaterNew(vector<Info>& info, string compiler, string flags) {
         cmakelists << "set(CMAKE_CPP_COMPILER " + compiler + ")" << endl;
     }
     if (flags != "") {
-        cmakelists << "set(CMAKE_C_FLAGS " + flags + ")" << endl;
-        cmakelists << "set(CMAKE_CXX_GLAGS " + flags + ")" << endl;
+        cmakelists << "add_compile_options(" + flags + ")" << endl;
     }
     for (size_t i = 0; i < info.size(); i++) {
         cmakelists << info[i].WriteCMake() << endl;
