@@ -49,7 +49,7 @@ int main()
             case ONLY_CPPS: {
                 Info infoTemp;
                 infoTemp.target = "add_library(" + targets[i] + " OBJECT " + rules[i] + ")";
-                if(recipes[i] != "")
+                if(recipes[i] != "" && recipes[i].find(findedFlafs) == std::string::npos)
                     infoTemp.recipe = "target_compile_options(" + targets[i] + " PUBLIC " + RemoveDuplicateWords(recipes[i]) + ")";
                 infoTemp.token = TARGET;
                 infoTemp.version = "3.0.2";
@@ -59,7 +59,7 @@ int main()
             case ONLY_OBJECTS: {
                 Info infoTemp;
                 infoTemp.target = "add_library(" + targets[i] + " " + ObjectProcessing(rules[i]) + ")";
-                if (recipes[i] != "")
+                if (recipes[i] != "" && recipes[i].find(findedFlafs) == std::string::npos)
                     infoTemp.recipe = "target_compile_options(" + targets[i] + " PUBLIC " + RemoveDuplicateWords(recipes[i]) + ")";
                 infoTemp.token = TARGET;
                 infoTemp.version = "3.0.2";
@@ -69,7 +69,7 @@ int main()
             case MIXED: {
                 Info infoTemp;
                 infoTemp.target = "add_library(" + targets[i] + " " + RuleChecking((rules[i])) + ")";
-                if (recipes[i] != "")
+                if (recipes[i] != "" && recipes[i].find(findedFlafs) == std::string::npos)
                     infoTemp.recipe = "target_compile_options(" + targets[i] + " PUBLIC " + RemoveDuplicateWords(recipes[i]) + ")";
                 infoTemp.token = TARGET;
                 infoTemp.version = "3.0.2";
