@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.26)
+cmake_minimum_required(VERSION 3.02)
 
 set(PROJECT_NAME CMakeConverter)
 project(${PROJECT_NAME})
